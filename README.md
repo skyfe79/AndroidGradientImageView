@@ -84,7 +84,7 @@ AndroidGradientImageView is a simple imageview. It just provides a few attribute
 
 or you can set attributes just you need
 
-```
+```xml
 <kr.pe.burt.android.lib.androidgradientimageview.AndroidGradientImageView
         android:src="@drawable/agassi"
         android:layout_width="match_parent"
