@@ -2,6 +2,7 @@ package kr.pe.burt.android.lib.androidgradientimageview;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -23,54 +24,95 @@ import android.widget.ImageView;
  * Created by burt on 2016. 6. 13..
  */
 public class AndroidGradientImageView extends ImageView {
+
+    private float x = 0f;
+    private float y = 0f;
+    private float width = 1.0f;
+    private float height = 1.0f;
+    private float rotate = 0.0f;
+    private int startColor = Color.parseColor("#00000000");
+    private int endColor = Color.parseColor("#FF000000");
+    private int middleColor = -1;
+
+    private float startOffset = 0.0f;
+    private float endOffset = 1.0f;
+    private float middleOffset = 0.5f;
+
     public AndroidGradientImageView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public AndroidGradientImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public AndroidGradientImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public AndroidGradientImageView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init(context, attrs, defStyleAttr);
     }
 
+    private void init(Context context, AttributeSet attrs, int defStyleAttr) {
+        if(attrs == null)
+            return;
+
+        TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.AndroidGradientImageViewAttrs);
+
+        x = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_x, x);
+        y = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_y, y);
+        width = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_width, width);
+        height= array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_height, height);
+        rotate = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_rotate, rotate);
+
+        startColor = array.getColor(R.styleable.AndroidGradientImageViewAttrs_giv_startColor, startColor);
+        endColor = array.getColor(R.styleable.AndroidGradientImageViewAttrs_giv_endColor, endColor);
+        middleColor = array.getColor(R.styleable.AndroidGradientImageViewAttrs_giv_middleColor, middleColor);
+
+        startOffset = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_startOffset, startOffset);
+        endOffset = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_endOffset, endOffset);
+        middleOffset = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_middleOffset, middleOffset);
+
+        array.recycle();
+    }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        GradientDrawable gd = new GradientDrawable(
-                GradientDrawable.Orientation.TL_BR,
-                new int[] {0x00000000,0xAA00ff00, 0xFFFF0000});
-        gd.setCornerRadius(0f);
-        gd.setDither(true);
-        gd.draw(canvas);
+        float left = x * getWidth();
+        float top = y * getHeight();
 
-        //Matrix m = new Matrix();
-        //m.setRotate(45, getWidth()/2, getHeight()/2);
-        //Shader shader = new LinearGradient()
-        //shader.setLocalMatrix(m);
+        float right = left + width * getWidth();
+        float bottom = top + height * getHeight();
+
+        int [] colors = null;
+        float [] offsets = null;
+        if(middleColor == -1) {
+            colors = new int [] { startColor, endColor };
+            offsets = new float[] { startOffset, endOffset };
+        } else {
+            colors = new int [] { startColor, middleColor, endColor };
+            offsets = new float[] { startOffset, middleOffset, endOffset };
+        }
+
+        Shader gradient = new LinearGradient(
+                left, top,
+                right, bottom,
+                colors,
+                offsets,
+                Shader.TileMode.CLAMP);
+
+        Matrix m = new Matrix();
+        m.setRotate(rotate, getWidth()/2, getHeight()/2);
+        gradient.setLocalMatrix(m);
 
         Paint paint = new Paint();
-        paint.setColor(Color.RED);
-        paint.setStrokeWidth(100);
-        //paint.setShader(shader);
-        canvas.drawLine(0, 0, 100, 100, paint);
-        canvas.drawBitmap(shapeDrawableToBitmap(gd, getWidth()/2, getHeight()/2, getWidth(), getHeight()), 0, 0, null);
-    }
-
-    private Bitmap shapeDrawableToBitmap(Drawable drawable, int left, int top, int width, int height) {
-        Canvas canvas = new Canvas();
-        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
-        canvas.setBitmap(bitmap);
-        drawable.setBounds(left, top, width, height);
-        drawable.draw(canvas);
-        return bitmap;
+        paint.setShader(gradient);
+        canvas.drawRect(left, top, right, bottom, paint);
     }
 }

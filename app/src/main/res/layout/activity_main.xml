@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -13,6 +14,16 @@
         android:src="@mipmap/ic_launcher"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:scaleType="fitXY"
+        app:giv_x="0.0"
+        app:giv_y="0.0"
+        app:giv_rotate="45.0"
+        app:giv_startColor="#8F00"
+        app:giv_startOffset="0.3"
+        app:giv_middleColor="#80F0"
+        app:giv_middleOffset="0.6"
+        app:giv_endColor="#800F"
+        app:giv_endOffset="0.8"
+        />
 
 </RelativeLayout>

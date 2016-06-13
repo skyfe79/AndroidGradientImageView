@@ -1,11 +1,32 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+    }
+}
+
+publish {
+    userOrg = 'skyfe79'
+    groupId = 'kr.pe.burt.android.lib'
+    artifactId = 'androidgradientimageview'
+    publishVersion = '0.0.1'
+    desc = 'AndroidGradientImageView is a simple imageview which overlays gradient on its content'
+    website = 'https://github.com/skyfe79/AndroidGradientImageView'
+    issueTracker = "${website}/issues"
+    repository = "${website}.git"
+}
 
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        minSdkVersion 17
+        minSdkVersion 8
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"

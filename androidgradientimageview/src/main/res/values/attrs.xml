@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="AndroidGradientImageViewAttrs">
+        <attr name="giv_x" format="float" />
+        <attr name="giv_y" format="float" />
+        <attr name="giv_width" format="float" />
+        <attr name="giv_height" format="float" />
+        <attr name="giv_rotate" format="float" />
+        <attr name="giv_startColor" format="color" />
+        <attr name="giv_endColor" format="color" />
+        <attr name="giv_middleColor" format="color" />
+        <attr name="giv_startOffset" format="float" />
+        <attr name="giv_middleOffset" format="float" />
+        <attr name="giv_endOffset" format="float" />
+    </declare-styleable>
+</resources>
