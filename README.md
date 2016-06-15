@@ -6,14 +6,15 @@
 
 AndroidGradientImageView is a simple imageview which overlays gradient on its content like below:
 
-![](art/screen.png)
+| ![](art/screen.png)  | ![](art/gradient-animation.gif) |
+|:-:|:-:|
 
 ## Setup Gradle
 
 ```groovy
 dependencies {
     ...
-    compile 'kr.pe.burt.android.lib:androidgradientimageview:0.0.1'
+    compile 'kr.pe.burt.android.lib:androidgradientimageview:0.0.2'
 }
 ```
 
@@ -65,6 +66,10 @@ AndroidGradientImageView is a simple imageview. It just provides a few attribute
 	* is offset of end color of gradient
  	* is float value
  	* you can set value from 0.0 to 1.0
+ * giv_alpha
+	* is alpha of the gradient
+	* is float value
+	* you can set value from 0.0 to 1.0	
 
 ## Examples
 

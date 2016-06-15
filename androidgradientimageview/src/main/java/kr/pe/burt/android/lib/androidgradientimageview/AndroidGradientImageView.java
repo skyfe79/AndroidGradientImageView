@@ -33,7 +33,7 @@ public class AndroidGradientImageView extends ImageView {
     private int startColor = Color.parseColor("#00000000");
     private int endColor = Color.parseColor("#FF000000");
     private int middleColor = -1;
-
+    private float gradientAlpha = 1.0f;
     private float startOffset = 0.0f;
     private float endOffset = 1.0f;
     private float middleOffset = 0.5f;
@@ -83,6 +83,8 @@ public class AndroidGradientImageView extends ImageView {
         endOffset = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_endOffset, endOffset);
         middleOffset = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_middleOffset, middleOffset);
 
+        gradientAlpha = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_alpha, gradientAlpha);
+
         array.recycle();
 
         if(middleColor == -1) {
@@ -118,6 +120,7 @@ public class AndroidGradientImageView extends ImageView {
         rotateMatrix.setRotate(rotate, getWidth()/2, getHeight()/2);
         gradient.setLocalMatrix(rotateMatrix);
         gradientPaint.setShader(gradient);
+        gradientPaint.setAlpha((int)(gradientAlpha * 255));
         canvas.drawRect(left, top, right, bottom, gradientPaint);
     }
 
@@ -171,6 +174,15 @@ public class AndroidGradientImageView extends ImageView {
     public void setHeightRatio(float heightRatio) {
         this.heightRatio = heightRatio;
         gradient = null;
+        postInvalidate();
+    }
+
+    public float getGradientAlpha() {
+        return gradientAlpha;
+    }
+
+    public void setGradientAlpha(float gradientAlpha) {
+        this.gradientAlpha = gradientAlpha;
         postInvalidate();
     }
 }
