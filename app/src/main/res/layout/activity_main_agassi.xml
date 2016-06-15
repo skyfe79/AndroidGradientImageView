@@ -16,6 +16,7 @@
         app:giv_startOffset="0.3"
         app:giv_endColor="#c000"
         app:giv_endOffset="0.6"
+        app:giv_alpha="0.0"
         />
 
     <TextView
@@ -28,7 +29,8 @@
         android:textStyle="bold"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="24dp"
-        android:layout_marginBottom="30dp"/>
+        android:layout_marginBottom="30dp"
+        android:alpha="0"/>
 
     <TextView
         android:id="@+id/desc"
@@ -40,6 +42,7 @@
         android:textStyle="bold"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="24dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:alpha="0"/>
 
 </RelativeLayout>

@@ -12,5 +12,6 @@
         <attr name="giv_startOffset" format="float" />
         <attr name="giv_middleOffset" format="float" />
         <attr name="giv_endOffset" format="float" />
+        <attr name="giv_alpha" format="float" />
     </declare-styleable>
 </resources>

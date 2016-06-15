@@ -14,7 +14,7 @@ publish {
     userOrg = 'skyfe79'
     groupId = 'kr.pe.burt.android.lib'
     artifactId = 'androidgradientimageview'
-    publishVersion = '0.0.1'
+    publishVersion = '0.0.2'
     desc = 'AndroidGradientImageView is a simple imageview which overlays gradient on its content'
     website = 'https://github.com/skyfe79/AndroidGradientImageView'
     issueTracker = "${website}/issues"
@@ -28,8 +28,8 @@ android {
     defaultConfig {
         minSdkVersion 8
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "0.0.2"
     }
     buildTypes {
         release {
