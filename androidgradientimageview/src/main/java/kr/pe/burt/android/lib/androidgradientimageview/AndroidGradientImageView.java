@@ -25,10 +25,10 @@ import android.widget.ImageView;
  */
 public class AndroidGradientImageView extends ImageView {
 
-    private float x = 0f;
-    private float y = 0f;
-    private float width = 1.0f;
-    private float height = 1.0f;
+    private float startX = 0f;
+    private float startY = 0f;
+    private float widthRatio = 1.0f;
+    private float heightRatio = 1.0f;
     private float rotate = 0.0f;
     private int startColor = Color.parseColor("#00000000");
     private int endColor = Color.parseColor("#FF000000");
@@ -37,6 +37,12 @@ public class AndroidGradientImageView extends ImageView {
     private float startOffset = 0.0f;
     private float endOffset = 1.0f;
     private float middleOffset = 0.5f;
+
+    int [] colors = null;
+    float [] offsets = null;
+    Shader gradient = null;
+    Matrix rotateMatrix = null;
+    Paint gradientPaint = null;
 
     public AndroidGradientImageView(Context context) {
         this(context, null);
@@ -63,10 +69,10 @@ public class AndroidGradientImageView extends ImageView {
 
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.AndroidGradientImageViewAttrs);
 
-        x = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_x, x);
-        y = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_y, y);
-        width = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_width, width);
-        height= array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_height, height);
+        startX = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_x, startX);
+        startY = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_y, startY);
+        widthRatio = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_width, widthRatio);
+        heightRatio= array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_height, heightRatio);
         rotate = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_rotate, rotate);
 
         startColor = array.getColor(R.styleable.AndroidGradientImageViewAttrs_giv_startColor, startColor);
@@ -78,20 +84,7 @@ public class AndroidGradientImageView extends ImageView {
         middleOffset = array.getFloat(R.styleable.AndroidGradientImageViewAttrs_giv_middleOffset, middleOffset);
 
         array.recycle();
-    }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        float left = x * getWidth();
-        float top = y * getHeight();
-
-        float right = left + width * getWidth();
-        float bottom = top + height * getHeight();
-
-        int [] colors = null;
-        float [] offsets = null;
         if(middleColor == -1) {
             colors = new int [] { startColor, endColor };
             offsets = new float[] { startOffset, endOffset };
@@ -100,19 +93,84 @@ public class AndroidGradientImageView extends ImageView {
             offsets = new float[] { startOffset, middleOffset, endOffset };
         }
 
-        Shader gradient = new LinearGradient(
-                left, top,
-                right, bottom,
-                colors,
-                offsets,
-                Shader.TileMode.CLAMP);
+        gradientPaint = new Paint();
+        rotateMatrix = new Matrix();
+    }
 
-        Matrix m = new Matrix();
-        m.setRotate(rotate, getWidth()/2, getHeight()/2);
-        gradient.setLocalMatrix(m);
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
 
-        Paint paint = new Paint();
-        paint.setShader(gradient);
-        canvas.drawRect(left, top, right, bottom, paint);
+        float left = startX * getWidth();
+        float top = startY * getHeight();
+
+        float right = left + widthRatio * getWidth();
+        float bottom = top + heightRatio * getHeight();
+
+        if(gradient == null) {
+            gradient = new LinearGradient(
+                    left, top,
+                    right, bottom,
+                    colors,
+                    offsets,
+                    Shader.TileMode.CLAMP);
+        }
+        rotateMatrix.setRotate(rotate, getWidth()/2, getHeight()/2);
+        gradient.setLocalMatrix(rotateMatrix);
+        gradientPaint.setShader(gradient);
+        canvas.drawRect(left, top, right, bottom, gradientPaint);
+    }
+
+    /**
+     * Provide get/set methods for Property Animation
+     */
+    public float getRotate() {
+        return rotate;
+    }
+
+    public void setRotate(float rotate) {
+        this.rotate = rotate;
+        gradient = null;
+        postInvalidate();
+    }
+
+    public float getStartX() {
+        return startX;
+    }
+
+    public void setStartX(float startX) {
+        this.startX = startX;
+        gradient = null;
+        postInvalidate();
+    }
+
+    public float getStartY() {
+        return startY;
+    }
+
+    public void setStartY(float startY) {
+        this.startY = startY;
+        gradient = null;
+        postInvalidate();
+    }
+
+    public float getWidthRatio() {
+        return widthRatio;
+    }
+
+    public void setWidthRatio(float widthRatio) {
+        this.widthRatio = widthRatio;
+        gradient = null;
+        postInvalidate();
+    }
+
+    public float getHeightRatio() {
+        return heightRatio;
+    }
+
+    public void setHeightRatio(float heightRatio) {
+        this.heightRatio = heightRatio;
+        gradient = null;
+        postInvalidate();
     }
 }

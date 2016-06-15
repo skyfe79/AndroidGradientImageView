@@ -7,6 +7,7 @@
     tools:context="kr.pe.burt.android.lib.androidgradientimageview.app.MainActivity">
 
     <kr.pe.burt.android.lib.androidgradientimageview.AndroidGradientImageView
+        android:id="@+id/gradientImageView"
         android:src="@drawable/agassi"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

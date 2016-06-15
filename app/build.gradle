@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "kr.pe.burt.android.lib.androidgradientimageview.app"
-        minSdkVersion 8
+        minSdkVersion 17
         targetSdkVersion 23
         versionCode 1
         versionName "0.0.1"
