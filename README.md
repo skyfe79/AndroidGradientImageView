@@ -13,7 +13,7 @@ AndroidGradientImageView is a simple imageView which overlays gradient on its co
 
 ```groovy
 dependencies {
-    ...
+    //...
     implementation 'kr.pe.burt.android.lib:androidgradientimageview:1.0.0'
 }
 ```
