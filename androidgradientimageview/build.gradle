@@ -1,24 +1,33 @@
 apply plugin: 'com.novoda.bintray-release'
 apply plugin: 'com.android.library'
 
+//// Step 1: Add the below plugin
+//apply plugin: 'maven-publish'
+
 buildscript {
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.novoda:bintray-release:0.6.1'
+        classpath "com.novoda:bintray-release:0.9.1"
     }
 }
 
 publish {
+
+    def groupProjectID = 'kr.pe.burt.android.lib'
+    def artifactProjectID = 'androidgradientimageview'
+    def publishVersionID = '1.0.0'
+
     userOrg = 'skyfe79'
-    groupId = 'kr.pe.burt.android.lib'
-    artifactId = 'androidgradientimageview'
-    publishVersion = '1.0.0'
+    groupId = groupProjectID
+    artifactId = artifactProjectID
+    publishVersion = publishVersionID
     desc = 'AndroidGradientImageView is a simple imageview which overlays gradient on its content'
     website = 'https://github.com/skyfe79/AndroidGradientImageView'
     issueTracker = "${website}/issues"
     repository = "${website}.git"
+
 }
 
 android {
@@ -28,7 +37,7 @@ android {
     defaultConfig {
         minSdkVersion 24
         targetSdkVersion 28
-        versionCode 3
+        versionCode 5
         versionName "1.0.0"
     }
     buildTypes {
